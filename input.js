@@ -6,29 +6,50 @@ const setupInput = (conn) => {
   stdin.setRawMode(true);
   stdin.setEncoding("utf8");
   stdin.resume();
+  let upInt;
+  let leftInt;
+  let downInt;
+  let rightInt;
   const handleUserInput = function (key) {
     if (key === '\u0003') {
       process.exit();
     }
     if (key === 'w') {
-      connection.write('Move: up')
+      clearInterval(upInt);
+      clearInterval(leftInt);
+      clearInterval(downInt);
+      clearInterval(rightInt);
+      upInt = setInterval(() => { connection.write('Move: up') }, 50);
     }
     if (key === 'a') {
-      connection.write('Move: left')
+      clearInterval(upInt);
+      clearInterval(leftInt);
+      clearInterval(downInt);
+      clearInterval(rightInt);
+      leftInt = setInterval(() => { connection.write('Move: left') }, 50);
     }
     if (key === 's') {
-      connection.write('Move: down')
+      clearInterval(upInt);
+      clearInterval(leftInt);
+      clearInterval(downInt);
+      clearInterval(rightInt);
+      downInt = setInterval(() => { connection.write('Move: down') }, 50);
     }
     if (key === 'd') {
-      connection.write('Move: right')
+      clearInterval(upInt);
+      clearInterval(leftInt);
+      clearInterval(downInt);
+      clearInterval(rightInt);
+      rightInt = setInterval(() => { connection.write('Move: right') }, 50);
     }
     if (key === 'e') {
       connection.write('Say: snek')
     }
   };
   stdin.on("data", handleUserInput);
-
   return stdin;
 };
+
+
 
 module.exports = setupInput;
